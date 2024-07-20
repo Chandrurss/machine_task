@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MachineTask</string>
+    <string name="flag_challenge">FLAG CHALLENGE</string>
+    <string name="schedule">SCHEDULE</string>
+    <string name="zero">0</string>
+    <string name="zero_zero">00:30</string>
+    <string name="save">Save</string>
+    <string name="challenge">CHALLENGE</string>
+    <string name="challenge_start">WILL START IN</string>
+    <string name="guess_countries">GUESS THE COUNTRY FROM THE FLAG?</string>
+    <string name="correct">Correct</string>
+    <string name="game_over">GAME OVER</string>
+</resources>

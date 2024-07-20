@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base gradient layer -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="0"
+                android:centerColor="@color/black_light"
+                android:endColor="@color/black"
+                android:startColor="@color/black"
+                android:type="linear" />
+            <corners android:radius="8dp" /> <!-- Radius for rounded corners -->
+        </shape>
+    </item>
+
+</layer-list>

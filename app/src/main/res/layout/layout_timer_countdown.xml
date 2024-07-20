@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="@dimen/margin_10dp"
+    android:background="@color/time_bg"
+    android:paddingBottom="@dimen/margin_20sp"
+    app:cardCornerRadius="@dimen/cardview_default_radius_10dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/flag_challenge"
+            android:textColor="@color/actionBar"
+            android:textSize="@dimen/margin_20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_challenge_timer"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_challenge_timer"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_cornor"
+            android:padding="@dimen/margin_10dp"
+            android:text="@string/zero_zero"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/schedule"
+            android:textColor="@color/black"
+            android:textSize="@dimen/margin_20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_schedule">
+
+            <!-- Hours EditText -->
+            <EditText
+                android:id="@+id/editTextHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <EditText
+                android:id="@+id/editTextH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="@dimen/margin_15sp"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp" />
+            <!-- Minutes EditText -->
+            <EditText
+                android:id="@+id/editTextMinutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editTextM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="@dimen/margin_15sp"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp" />
+            <!-- Seconds EditText -->
+            <EditText
+                android:id="@+id/editTextSeconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/editTextS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/rounded_edittext_background"
+                android:gravity="center"
+                android:inputType="number"
+                android:padding="15dp"
+                android:text="@string/zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corner_button"
+            android:gravity="center"
+            android:padding="@dimen/margin_10dp"
+            android:paddingStart="40dp"
+            android:paddingTop="@dimen/margin_10dp"
+            android:paddingEnd="40dp"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/layout_challenge_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout_timer" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_challenge_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_save">
+
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/challenge"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/challenge_start"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/margin_10dp"
+                android:text="@string/zero_zero"
+                android:textColor="@color/txt_grey_light"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_challenge_start" />
+
+
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/viewPager">
+            <TextView
+                android:id="@+id/txt_game_over"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/game_over"
+                android:textSize="28sp"
+                android:visibility="gone"
+                android:textStyle="bold" />
+        </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
