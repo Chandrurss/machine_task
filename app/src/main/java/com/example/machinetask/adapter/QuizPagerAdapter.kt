@@ -18,7 +18,6 @@ import com.example.machinetask.MainActivity
 import com.example.machinetask.R
 import com.example.machinetask.model.Question
 
-
 class QuizPagerAdapter(
     private val questions: List<Question>,
     private val listener: OnOptionSelectedListener,
@@ -27,9 +26,10 @@ class QuizPagerAdapter(
 ) : RecyclerView.Adapter<QuizPagerAdapter.QuestionViewHolder>() {
 
     private var currentTimer: CountDownTimer? = null
+    private var delayHandler: Handler? = null
 
     interface OnOptionSelectedListener {
-        fun onOptionSelected(answerId: Int, selectedOptionId: Int, position:Int)
+        fun onOptionSelected(answerId: Int, selectedOptionId: Int, position: Int)
     }
 
     inner class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,15 +42,11 @@ class QuizPagerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.challenge_start_in, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.challenge_start_in, parent, false)
         return QuestionViewHolder(view)
     }
 
-    override fun onBindViewHolder(
-        holder: QuestionViewHolder,
-        @SuppressLint("RecyclerView") position: Int
-    ) {
+    override fun onBindViewHolder(holder: QuestionViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val question = questions[position]
         Log.d("QuizPagerAdapter", "Binding question at position: $position with data: $question")
         val questionNo = position + 1
@@ -64,10 +60,8 @@ class QuizPagerAdapter(
         holder.txtOptionFour.text = options[3].countryName
         AppConfig.position = position
         AppConfig.isClicked = false
-        holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
-        holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
-        holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
-        holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
+        resetOptionBackgrounds(holder)
+
         holder.txtOptionOne.setOnClickListener {
             handleOptionSelection(holder, question.answerId, options[0].id, position)
             highlightSelectedOption(holder, 1)
@@ -84,31 +78,21 @@ class QuizPagerAdapter(
             handleOptionSelection(holder, question.answerId, options[3].id, position)
             highlightSelectedOption(holder, 4)
         }
+
         // Cancel any existing timer before starting a new one
         currentTimer?.cancel()
-
+        delayHandler?.removeCallbacksAndMessages(null)
         // Timer logic (30 seconds)
-        currentTimer = object : CountDownTimer(30000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d("Timer", "Seconds remaining: ${millisUntilFinished / 1000}")
-                timerText.text = (millisUntilFinished / 1000).toString()
-            }
-
-            override fun onFinish() {
-                Log.d("Timer", "Timer finished")
-                timerText.text = "0"
-                delayNextQuestion(holder)
-            }
-        }
-         .start()
-
+        startTimer(holder)
     }
+
     private fun resetOptionBackgrounds(holder: QuestionViewHolder) {
         holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
         holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
         holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
         holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
     }
+
     private fun highlightSelectedOption(holder: QuestionViewHolder, optionNumber: Int) {
         resetOptionBackgrounds(holder)
         when (optionNumber) {
@@ -122,14 +106,31 @@ class QuizPagerAdapter(
     private fun handleOptionSelection(holder: QuestionViewHolder, answerId: Int, selectedOptionId: Int, position: Int) {
         listener.onOptionSelected(answerId, selectedOptionId, position)
         // Delay transition to the next question
-        delayNextQuestion(holder)
+        startDelayBeforeNextQuestion(holder)
     }
-    private fun delayNextQuestion(holder: QuestionViewHolder) {
+
+    private fun startTimer(holder: QuestionViewHolder) {
+        currentTimer = object : CountDownTimer(30000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                timerText.text = (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                timerText.text = "0"
+                // Start a 10-second delay before transitioning to the next question
+                startDelayBeforeNextQuestion(holder)
+            }
+        }.start()
+    }
+
+    private fun startDelayBeforeNextQuestion(holder: QuestionViewHolder) {
         (holder.itemView.context as? AppCompatActivity)?.let {
             if (it is MainActivity) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    it.nextQuestion()
-                }, 10000) // Delay for 10 seconds before calling nextQuestion()
+                delayHandler = Handler(Looper.getMainLooper()).apply {
+                    postDelayed({
+                        it.nextQuestion()
+                    }, 10000) // Delay for 10 seconds before calling nextQuestion()
+                }
             }
         }
     }
@@ -160,5 +161,4 @@ class QuizPagerAdapter(
     private fun updateUi(imgFlag: ImageView, flagResource: Int) {
         Glide.with(mainActivity).load(flagResource).into(imgFlag)
     }
-
 }

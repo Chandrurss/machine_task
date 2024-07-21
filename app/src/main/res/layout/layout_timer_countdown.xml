@@ -82,6 +82,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -97,6 +98,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp" />
             <!-- Minutes EditText -->
@@ -109,6 +111,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp" />
 
@@ -123,6 +126,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp" />
             <!-- Seconds EditText -->
@@ -135,6 +139,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp" />
 
@@ -148,6 +153,7 @@
                 android:inputType="number"
                 android:padding="15dp"
                 android:text="@string/zero"
+                android:maxLength="1"
                 android:textColor="@color/txt_grey_light"
                 android:textSize="15sp" />
 
