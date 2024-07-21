@@ -2,6 +2,8 @@ package com.example.machinetask.adapter
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.example.machinetask.AppConfig
 import com.example.machinetask.MainActivity
 import com.example.machinetask.R
 import com.example.machinetask.model.Question
+
 
 class QuizPagerAdapter(
     private val questions: List<Question>,
@@ -66,55 +69,26 @@ class QuizPagerAdapter(
         holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
         holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
         holder.txtOptionOne.setOnClickListener {
-            listener.onOptionSelected(
-                question.answerId,
-                options[0].id,position
-            )
-
-            holder.txtOptionOne.setBackgroundResource(R.drawable.selection_color)
-            holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
+            handleOptionSelection(holder, question.answerId, options[0].id, position)
+            highlightSelectedOption(holder, 1)
         }
         holder.txtOptionTwo.setOnClickListener {
-            listener.onOptionSelected(
-                question.answerId,
-                options[1].id,
-                position
-            )
-            holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionTwo.setBackgroundResource(R.drawable.selection_color)
-            holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
+            handleOptionSelection(holder, question.answerId, options[1].id, position)
+            highlightSelectedOption(holder, 2)
         }
         holder.txtOptionThree.setOnClickListener {
-            listener.onOptionSelected(
-                question.answerId,
-                options[2].id,
-                position
-            )
-            holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionThree.setBackgroundResource(R.drawable.selection_color)
-            holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
+            handleOptionSelection(holder, question.answerId, options[2].id, position)
+            highlightSelectedOption(holder, 3)
         }
         holder.txtOptionFour.setOnClickListener {
-            listener.onOptionSelected(
-                question.answerId,
-                options[3].id,
-                position
-            )
-            holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
-            holder.txtOptionFour.setBackgroundResource(R.drawable.selection_color)
+            handleOptionSelection(holder, question.answerId, options[3].id, position)
+            highlightSelectedOption(holder, 4)
         }
-
         // Cancel any existing timer before starting a new one
         currentTimer?.cancel()
 
         // Timer logic (30 seconds)
-        currentTimer = object : CountDownTimer(5000, 1000) {
+        currentTimer = object : CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 Log.d("Timer", "Seconds remaining: ${millisUntilFinished / 1000}")
                 timerText.text = (millisUntilFinished / 1000).toString()
@@ -123,15 +97,41 @@ class QuizPagerAdapter(
             override fun onFinish() {
                 Log.d("Timer", "Timer finished")
                 timerText.text = "0"
-                (holder.itemView.context as? AppCompatActivity)?.let {
-                    if (it is MainActivity) {
-                        it.nextQuestion()
-                    }
-                }
+                delayNextQuestion(holder)
             }
         }
-        currentTimer?.start()
+         .start()
 
+    }
+    private fun resetOptionBackgrounds(holder: QuestionViewHolder) {
+        holder.txtOptionOne.setBackgroundResource(R.drawable.rounded_corner_border)
+        holder.txtOptionTwo.setBackgroundResource(R.drawable.rounded_corner_border)
+        holder.txtOptionThree.setBackgroundResource(R.drawable.rounded_corner_border)
+        holder.txtOptionFour.setBackgroundResource(R.drawable.rounded_corner_border)
+    }
+    private fun highlightSelectedOption(holder: QuestionViewHolder, optionNumber: Int) {
+        resetOptionBackgrounds(holder)
+        when (optionNumber) {
+            1 -> holder.txtOptionOne.setBackgroundResource(R.drawable.selection_color)
+            2 -> holder.txtOptionTwo.setBackgroundResource(R.drawable.selection_color)
+            3 -> holder.txtOptionThree.setBackgroundResource(R.drawable.selection_color)
+            4 -> holder.txtOptionFour.setBackgroundResource(R.drawable.selection_color)
+        }
+    }
+
+    private fun handleOptionSelection(holder: QuestionViewHolder, answerId: Int, selectedOptionId: Int, position: Int) {
+        listener.onOptionSelected(answerId, selectedOptionId, position)
+        // Delay transition to the next question
+        delayNextQuestion(holder)
+    }
+    private fun delayNextQuestion(holder: QuestionViewHolder) {
+        (holder.itemView.context as? AppCompatActivity)?.let {
+            if (it is MainActivity) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    it.nextQuestion()
+                }, 10000) // Delay for 10 seconds before calling nextQuestion()
+            }
+        }
     }
 
     private fun getFlagResource(countryCode: String): Int {
